@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,18 +26,32 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  void flutterToastMessage(String message){
+
+    Fluttertoast.showToast(
+      msg: message,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 4,
+      backgroundColor: Colors.deepPurple.shade50,
+      textColor: Colors.deepPurple,
+      fontSize: 16.0,
+    );
+  }
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
-    print("Payment Sucessful");
+
+    flutterToastMessage('Payment Successful\nPayment ID: ${response.paymentId}');
+    print("payment Successful");
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
+
+    flutterToastMessage('Payment Failed: ${response.code} \n ${response.message}');
     print("Payment Failed");
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
+
+    flutterToastMessage('EXTERNAL_WALLET IS: ${response.walletName}');
   }
 
   @override
@@ -162,7 +177,11 @@ class _HomePageState extends State<HomePage> {
                           'email': emailController.text
                         }
                       };
-                      _razorpay.open(options);
+                      try{
+                        _razorpay.open(options);
+                      } catch(e) {
+                        debugPrint(e.toString());
+                      }
                     },
                     child: const Text('Make Payment')),
               ),
