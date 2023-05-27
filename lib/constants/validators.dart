@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-
-// API KEY
-const String kApiKey = "rzp_test_LTEgszue0u4eFC";
-
-// ICONS
-const kRupeeIcon = Icon(
-  Icons.currency_rupee,
-  color: Colors.deepPurple,
-  size: 30,
-);
 
 // TEXT FORM FIELDS VALIDATORS
 String? Function(String?)? kAmountValidator = (value) {
@@ -39,9 +28,9 @@ String? Function(String?)? kDescriptionValidator = (value) {
 };
 
 String? Function(String?)? kEmailValidator = (email) =>
-    email != null && !EmailValidator.validate(email)
-        ? 'Enter a valid email'
-        : null;
+email != null && !EmailValidator.validate(email)
+    ? 'Enter a valid email'
+    : null;
 
 String? Function(String?)? kPhoneValidator = (value) {
   if (value!.isEmpty) {
@@ -62,16 +51,3 @@ String? Function(String?)? kNameValidator = (value) {
   }
   return null; // Return null for no validation errors
 };
-
-// CONST TEXTS
-const kAppBarText = 'IncraSoft Payment Gateway';
-const kNameHintText = 'Enter Your Name';
-const kPhoneHintText = 'Enter Phone Number';
-const kEmailHintText = 'Enter your Email';
-const kDescriptionHintText = 'Enter Description';
-const kAmountHintText = 'Enter Amount';
-
-// TEXT SIZE
-const kAmountTextSize = TextStyle(
-  fontSize: 22.0,
-);

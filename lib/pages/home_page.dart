@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'constants.dart';
+import '../constants/other_constants.dart';
+import '../constants/api_key.dart';
+import '../constants/validators.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,6 +28,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _razorpay.clear(); // Removes all listeners
+    super.dispose();
+  }
+
   void flutterToastMessage(String message){
 
     Fluttertoast.showToast(
@@ -39,25 +47,19 @@ class _HomePageState extends State<HomePage> {
   }
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
 
-    flutterToastMessage('Payment Successful\nPayment ID: ${response.paymentId}');
-    print("payment Successful");
+    flutterToastMessage('$flutterToastSuccessMessage: ${response.paymentId}');
+    print("payment Successful"); // Terminal Message
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
 
-    flutterToastMessage('Payment Failed: ${response.code} \n ${response.message}');
-    print("Payment Failed");
+    flutterToastMessage('$flutterToastFailureMessage: ${response.code} \n ${response.message}');
+    print("Payment Failed"); // Terminal Message
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
 
-    flutterToastMessage('EXTERNAL_WALLET IS: ${response.walletName}');
-  }
-
-  @override
-  void dispose() {
-    _razorpay.clear(); // Removes all listeners
-    super.dispose();
+    flutterToastMessage('$flutterToastExternalWalletMessage: ${response.walletName}');
   }
 
   @override
@@ -183,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                         debugPrint(e.toString());
                       }
                     },
-                    child: const Text('Make Payment')),
+                    child: const Text(kMakePaymentText)),
               ),
             ],
           ),
