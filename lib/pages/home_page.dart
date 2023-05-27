@@ -13,7 +13,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  // Creating razorpay's object
   final _razorpay = Razorpay();
+
+  // Creating all Text Controllers
   final amountController = TextEditingController();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -21,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   final descriptionController = TextEditingController();
 
   @override
+  // Event Listeners for communication
   void initState() {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -29,11 +34,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  // Clearing the object data
   void dispose() {
     _razorpay.clear(); // Removes all listeners
     super.dispose();
   }
 
+  // Function to display toast messages
   void flutterToastMessage(String message){
 
     Fluttertoast.showToast(
@@ -45,18 +52,21 @@ class _HomePageState extends State<HomePage> {
       fontSize: 16.0,
     );
   }
+  // Function that handle's Payment's Success
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
 
     flutterToastMessage('$flutterToastSuccessMessage: ${response.paymentId}');
     print("payment Successful"); // Terminal Message
   }
 
+  // Function handle's Payment Failure
   void _handlePaymentError(PaymentFailureResponse response) {
 
     flutterToastMessage('$flutterToastFailureMessage: ${response.code} \n ${response.message}');
     print("Payment Failed"); // Terminal Message
   }
 
+  // Function handle's External Wallet
   void _handleExternalWallet(ExternalWalletResponse response) {
 
     flutterToastMessage('$flutterToastExternalWalletMessage: ${response.walletName}');
@@ -77,6 +87,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Name Text From Field
               Padding(
                 padding: EdgeInsets.only(
                     top: size.width / 5,
@@ -90,6 +101,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: const InputDecoration(hintText: kNameHintText),
                 ),
               ),
+              // Phone Number Text Form Field
               Padding(
                 padding: EdgeInsets.only(
                     bottom: size.width / 10,
@@ -103,6 +115,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: const InputDecoration(hintText: kPhoneHintText),
                 ),
               ),
+              // Email Text From Field
               Padding(
                 padding: EdgeInsets.only(
                     bottom: size.width / 10,
@@ -115,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                   decoration: const InputDecoration(hintText: kEmailHintText),
                 ),
               ),
+              // Description Text Form Field
               Padding(
                 padding: EdgeInsets.only(
                     bottom: size.width / 8,
@@ -128,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                       const InputDecoration(hintText: kDescriptionHintText),
                 ),
               ),
+              // Amount Text Form Field
               Padding(
                 padding: EdgeInsets.only(
                   bottom: size.width / 10,
@@ -157,6 +172,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              // Make Payment Button at Bottom of Screen
               Padding(
                 padding: EdgeInsets.only(bottom: size.width / 20),
                 child: ElevatedButton(
@@ -167,6 +183,7 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: Size(size.width  * 7 / 11, size.width / 8), // Button padding
                     ),
                     onPressed: () {
+                      // Data of current payment to be passed to razorpay object
                       var options = {
                         'key': kApiKey,
                         'amount': (int.parse(amountController.text) * 100)
@@ -179,6 +196,7 @@ class _HomePageState extends State<HomePage> {
                           'email': emailController.text
                         }
                       };
+                      // Accessing razorpay gateway
                       try{
                         _razorpay.open(options);
                       } catch(e) {
