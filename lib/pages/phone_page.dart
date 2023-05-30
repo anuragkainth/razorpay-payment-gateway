@@ -1,23 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:payment_gateway/constants/text_constants.dart';
 
-class MyPhone extends StatefulWidget {
-  const MyPhone({Key? key}) : super(key: key);
+class PhonePage extends StatefulWidget {
+  const PhonePage({Key? key}) : super(key: key);
 
   static String verify = "";
 
   @override
-  State<MyPhone> createState() => _MyPhoneState();
+  State<PhonePage> createState() => _PhonePageState();
 }
 
-class _MyPhoneState extends State<MyPhone> {
+class _PhonePageState extends State<PhonePage> {
   TextEditingController countryController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
-    countryController.text = "+91";
+    countryController.text = kCountryCode;
     super.initState();
   }
 
@@ -35,14 +36,14 @@ class _MyPhoneState extends State<MyPhone> {
               Padding(
                 padding: EdgeInsets.only(bottom: size.width / 26),
                 child: Text(
-                  "Welcome to IncraSoft",
+                  kWelcomeText,
                   style: TextStyle(fontSize: size.width / 17, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: size.width / 32),
                 child: Text(
-                  "We need to register your phone before getting started!",
+                  kWelcomeDescription,
                   style: TextStyle(
                     fontSize: size.width / 26,
                   ),
@@ -73,7 +74,7 @@ class _MyPhoneState extends State<MyPhone> {
                         ),
                       ),
                       Text(
-                        "|",
+                        kPhoneTextFieldDivider,
                         style: TextStyle(fontSize: size.width / 13, color: Colors.grey),
                       ),
                       SizedBox(
@@ -85,7 +86,7 @@ class _MyPhoneState extends State<MyPhone> {
                             keyboardType: TextInputType.phone,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Phone",
+                              hintText: kPhoneBoxHintText,
                             ),
                           ))
                     ],
@@ -105,14 +106,14 @@ class _MyPhoneState extends State<MyPhone> {
                         verificationCompleted: (PhoneAuthCredential credential) {},
                         verificationFailed: (FirebaseAuthException e) {},
                         codeSent: (String verificationId, int? resendToken) {
-                          MyPhone.verify = verificationId;
+                          PhonePage.verify = verificationId;
                           Navigator.pushNamed(context, "otp");
                         },
                         codeAutoRetrievalTimeout: (String verificationId) {},
                       );
                       // Navigator.pushNamed(context, 'verify');
                     },
-                    child: const Text("Send the code")),
+                    child: const Text(kPhoneScreenButtonText)),
               )
             ],
           ),

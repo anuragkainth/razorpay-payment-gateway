@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import '../constants/other_constants.dart';
-import '../constants/api_key.dart';
+import '../constants/text_constants.dart';
+import '../constants/razor_api_key.dart';
 import '../constants/validators.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../constants/widget_constants.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,21 +56,21 @@ class _HomePageState extends State<HomePage> {
   // Function that handle's Payment's Success
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
 
-    flutterToastMessage('$flutterToastSuccessMessage: ${response.paymentId}');
+    flutterToastMessage('$kFlutterToastSuccessMessage: ${response.paymentId}');
     print("payment Successful"); // Terminal Message
   }
 
   // Function handle's Payment Failure
   void _handlePaymentError(PaymentFailureResponse response) {
 
-    flutterToastMessage('$flutterToastFailureMessage: ${response.code} \n ${response.message}');
+    flutterToastMessage('$kFlutterToastFailureMessage: ${response.code} \n ${response.message}');
     print("Payment Failed"); // Terminal Message
   }
 
   // Function handle's External Wallet
   void _handleExternalWallet(ExternalWalletResponse response) {
 
-    flutterToastMessage('$flutterToastExternalWalletMessage: ${response.walletName}');
+    flutterToastMessage('$kFlutterToastExternalWalletMessage: ${response.walletName}');
   }
 
   @override
@@ -185,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       // Data of current payment to be passed to razorpay object
                       var options = {
-                        'key': kApiKey,
+                        'key': kRazorPayApiKey,
                         'amount': (int.parse(amountController.text) * 100)
                             .toString(), //in the smallest currency sub-unit.
                         'name': nameController.text,

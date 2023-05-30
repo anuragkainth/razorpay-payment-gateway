@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payment_gateway/constants/other_constants.dart';
+import 'package:payment_gateway/constants/text_constants.dart';
 
 class GatewayTextField extends StatefulWidget {
   const GatewayTextField({Key? key}) : super(key: key);

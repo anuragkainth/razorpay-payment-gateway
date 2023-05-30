@@ -2,15 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:payment_gateway/pages/phone_page.dart';
 import 'package:pinput/pinput.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../constants/text_constants.dart';
+import '../constants/widget_constants.dart';
 
-class MyVerify extends StatefulWidget {
-  const MyVerify({Key? key}) : super(key: key);
+
+class OtpVerifyPage extends StatefulWidget {
+  const OtpVerifyPage({Key? key}) : super(key: key);
 
   @override
-  State<MyVerify> createState() => _MyVerifyState();
+  State<OtpVerifyPage> createState() => _OtpVerifyPageState();
 }
 
-class _MyVerifyState extends State<MyVerify> {
+class _OtpVerifyPageState extends State<OtpVerifyPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var code = "";
 
@@ -25,10 +29,7 @@ class _MyVerifyState extends State<MyVerify> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
-          ),
+          icon: kBackArrowIcon,
         ),
         elevation: 0,
       ),
@@ -42,14 +43,14 @@ class _MyVerifyState extends State<MyVerify> {
               Padding(
                 padding: EdgeInsets.only(bottom: size.width / 26),
                 child: Text(
-                  "Welcome to IncraSoft",
+                  kOtpWelcomeText,
                   style: TextStyle(fontSize: size.width / 17, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: size.width / 32),
                 child: Text(
-                  "We need to register your phone before getting started!",
+                  kOtpDescription,
                   style: TextStyle(
                     fontSize: size.width / 26,
                   ),
@@ -78,15 +79,26 @@ class _MyVerifyState extends State<MyVerify> {
                       try {
                         PhoneAuthCredential credential =
                             PhoneAuthProvider.credential(
-                                verificationId: MyPhone.verify, smsCode: code);
+                                verificationId: PhonePage.verify, smsCode: code);
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
-                        Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
+                        Fluttertoast.showToast(
+                          msg: "Welcome User",
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 4,
+                          backgroundColor: Colors.deepPurple.shade50,
+                          textColor: Colors.deepPurple,
+                          fontSize: 16.0,
+                        );
+                        if(context.mounted){
+                          //to determine whether the context is still valid before interacting with it
+                          Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
+                        }
                       } catch (e) {
                         print(e.toString());
                       }
                     },
-                    child: const Text("Verify Phone Number")),
+                    child: const Text(kOptScreenButtonText)),
               ),
               Row(
                 children: [
@@ -99,7 +111,7 @@ class _MyVerifyState extends State<MyVerify> {
                         );
                       },
                       child: const Text(
-                        "Edit Phone Number ?",
+                        kOtpScreenChangePhoneText,
                         style: TextStyle(color: Colors.black),
                       ))
                 ],

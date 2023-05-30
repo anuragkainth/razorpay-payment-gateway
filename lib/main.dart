@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'phone',
       routes: {
-        'phone' : (context) => const MyPhone(),
-        'otp' : (context) => const MyVerify(),
+        'phone' : (context) => const PhonePage(),
+        'otp' : (context) => const OtpVerifyPage(),
         'home' : (context) => const HomePage()
       },
       title: 'Flutter Demo',
