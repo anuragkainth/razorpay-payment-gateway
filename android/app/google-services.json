@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "915130002968",
+    "project_id": "incrasoft-project",
+    "storage_bucket": "incrasoft-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915130002968:android:1593a849f51e27b64c5d6d",
+        "android_client_info": {
+          "package_name": "com.example.payment_gateway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz13IqqvFYQ4zRFhwnqLgyxsLDc-1BNMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
