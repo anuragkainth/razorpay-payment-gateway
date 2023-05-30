@@ -20,6 +20,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   fluttertoast: ^8.2.2
   pinput: ^2.2.31
+  sms_autofill: ^2.3.0
 
   # Firebase Dependencies
   cloud_firestore: ^4.7.1

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:payment_gateway/constants/text_constants.dart';
 
 class PhonePage extends StatefulWidget {
@@ -104,12 +105,23 @@ class _PhonePageState extends State<PhonePage> {
                       await FirebaseAuth.instance.verifyPhoneNumber(
                         phoneNumber: countryController.text+phoneController.text,
                         verificationCompleted: (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
+                        verificationFailed: (FirebaseAuthException e) {
+                          Fluttertoast.showToast(
+                            msg: "Error, Something went wrong",
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 4,
+                            backgroundColor: Colors.deepPurple.shade50,
+                            textColor: Colors.deepPurple,
+                            fontSize: 16.0,
+                          );
+                        },
                         codeSent: (String verificationId, int? resendToken) {
                           PhonePage.verify = verificationId;
                           Navigator.pushNamed(context, "otp");
                         },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
+                        codeAutoRetrievalTimeout: (String verificationId) {
+                          PhonePage.verify = verificationId;
+                        },
                       );
                       // Navigator.pushNamed(context, 'verify');
                     },

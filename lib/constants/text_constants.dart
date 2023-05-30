@@ -27,3 +27,4 @@ const kOtpWelcomeText = "Welcome to IncraSoft";
 const kOtpDescription = "We need to register your phone before getting started!";
 const kOptScreenButtonText = "Verify Phone Number";
 const kOtpScreenChangePhoneText = "Edit Phone Number!";
+const kOtpVerifiedWelcomeToastMessage = "Phone Number Verified\nWelcome user";

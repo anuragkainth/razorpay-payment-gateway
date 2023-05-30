@@ -83,7 +83,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
                         Fluttertoast.showToast(
-                          msg: "Welcome User",
+                          msg: kOtpVerifiedWelcomeToastMessage,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 4,
                           backgroundColor: Colors.deepPurple.shade50,

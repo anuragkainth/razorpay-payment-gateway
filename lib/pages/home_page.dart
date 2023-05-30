@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../constants/text_constants.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
     super.initState();
   }
 
@@ -79,6 +81,24 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text(kAppBarText, style: TextStyle(color: Colors.deepPurple),)),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 'signOut',
+                  child: Text('Sign out', style: TextStyle(fontWeight: FontWeight.w500, fontSize: size.width / 25),),
+                ),
+              ];
+            },
+            onSelected: (value) {
+              if (value == 'signOut') {
+                FirebaseAuth.instance.signOut();
+                Navigator.pushNamedAndRemoveUntil(context, 'auth', (route) => false);
+              }
+            },
+          ),
+        ],
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
